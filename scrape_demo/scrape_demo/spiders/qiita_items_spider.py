@@ -3,8 +3,8 @@ import scrapy
 import json
 
 
-class PageSpiderSpider(scrapy.Spider):
-    name = 'page_spider'
+class QiitaItemsSpider(scrapy.Spider):
+    name = 'qiita_items_spider'
     allowed_domains = ['qiita.com']
 
     def start_requests(self):
