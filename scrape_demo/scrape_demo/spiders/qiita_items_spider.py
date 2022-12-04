@@ -1,10 +1,10 @@
 import datetime
-import scrapy
 import json
+import scrapy
 
 
 class QiitaItemsSpider(scrapy.Spider):
-    name = 'qiita_items_spider'
+    name = 'qiita_items'
     allowed_domains = ['qiita.com']
 
     def start_requests(self):
