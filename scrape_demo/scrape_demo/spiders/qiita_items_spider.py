@@ -1,4 +1,3 @@
-import datetime
 import json
 import scrapy
 
@@ -8,7 +7,7 @@ class QiitaItemsSpider(scrapy.Spider):
     allowed_domains = ['qiita.com']
 
     def start_requests(self):
-        base_url = 'https://qiita.com/api/v2/items?page=1&per_page=10&query=Python'
+        base_url = 'https://qiita.com/api/v2/items?page=1&per_page=100&query=Python'
         request_headers = {
             'Content-Type': 'application/json',
         }
@@ -16,10 +15,12 @@ class QiitaItemsSpider(scrapy.Spider):
 
     def parse(self, response):
         json_response = json.loads(response.text)
-        self.write_json(json_response)
-
-    def write_json(self, json_response):
-        now = datetime.datetime.now()
-        filename = './output/log_' + now.strftime('%Y%m%d_%H%M%S') + '.json'
-        with open(filename, 'w') as f:
-            json.dump(json_response, f, indent=4)
+        for article in json_response:
+            id = article['id']
+            title = article['title']
+            likes_count = article['likes_count']
+            yield {
+                'id': id,
+                'title': title,
+                'likes_count': likes_count
+            }
